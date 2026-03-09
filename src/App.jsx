@@ -171,7 +171,7 @@ function CoreDetailTab({data,stg,hist,coreId,onBack,onGoBundle}){
   const seas=core?calcSeasonal(core.id,hist?.coreInv||[]):null;
   const pipeline=core?[{l:"Raw",v:core.raw},{l:"Inbound",v:core.inb},{l:"Pre-Proc",v:core.pp},{l:"JFN",v:core.jfn},{l:"Proc Q",v:core.pq},{l:"JI",v:core.ji},{l:"FBA",v:core.fba}]:[];
   const maxP=Math.max(...pipeline.map(p=>p.v),1);
-  const inboundShipments=useMemo(()=>(data.inbound||[]).filter(s=>s.core===sel),[data.inbound,sel]);
+  const inboundShipments=useMemo(()=>{const ids=new Set([sel,...bIds]);return(data.inbound||[]).filter(s=>ids.has(s.core))},[data.inbound,sel,bIds]);
   const[bSort,setBSort]=useState("dsr");
   const totalBDsr=useMemo(()=>coreBundlesAll.reduce((s,b)=>s+(b.cd||0),0),[coreBundlesAll]);
   const coreBundles=useMemo(()=>{
