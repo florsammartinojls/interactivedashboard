@@ -4,7 +4,7 @@ import{BarChart,Bar,LineChart,Line,ComposedChart,XAxis,YAxis,CartesianGrid,Toolt
 const API='https://script.google.com/macros/s/AKfycbzCtCQKf8vpLVltYF21LjA40A4L-8UDJe3qV2Fx17E8r0XEFg55QjfzB2s5_5d4Ohu8Jg/exec';
 let _jid=0;
 function jp(url,timeout=60000){return new Promise((res,rej)=>{const cb='__jp'+(++_jid)+'_'+Date.now();const timer=setTimeout(()=>{cl();rej(new Error('Timeout'))},timeout);const s=document.createElement('script');function cl(){clearTimeout(timer);delete window[cb];s.parentNode&&s.parentNode.removeChild(s)}window[cb]=d=>{cl();res(d)};s.src=url+(url.includes('?')?'&':'?')+'callback='+cb;s.onerror=()=>{cl();rej(new Error('Network error'))};document.head.appendChild(s)})}
-function apiCall(a){return jp(API+'?action='+a)}
+function apiCall(a){return jp(API+'?action='+a+'&_t='+Date.now())}
 
 const R=n=>n==null?"\u2014":Math.round(n).toLocaleString("en-US");
 const D=n=>n==null?"\u2014":"$"+Math.round(n).toLocaleString("en-US");
